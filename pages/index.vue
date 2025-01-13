@@ -79,14 +79,14 @@ onMounted(() => {
     font-weight: 450;
     text-align: center;
     font-size: 1.9rem;
-    margin-top: 25px;
+    margin-top: 20px;
 
     span {
       display: inline-block;
       padding: 4px 10px;
       background: rgb(245, 223, 231);
       border-radius: 5px;
-      animation: bg 25s infinite;
+      animation: bg 40s infinite;
 
       @keyframes bg {
         0% {
