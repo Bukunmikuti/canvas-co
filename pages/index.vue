@@ -43,29 +43,9 @@ onMounted(() => {
   opacity: 0.15;
   width: 100%;
   height: 50%;
-  background: radial-gradient(
-        circle,
-        transparent 20%,
-        #ffffff 20%,
-        #ffffff 80%,
-        transparent 80%,
-        transparent
-      )
-      0% 0% / 72px 72px,
-    radial-gradient(
-        circle,
-        transparent 20%,
-        #ffffff 20%,
-        #ffffff 80%,
-        transparent 80%,
-        transparent
-      )
-      36px 36px / 72px 72px,
-    linear-gradient(#8a00cc 0.5px, transparent 0.5px) 0px -0.25px / 36px 36px,
-    linear-gradient(90deg, #8a00cc 0.5px, #ffffff 0.5px) -0.25px 0px / 36px 36px
-      #ffffff;
-  background-size: 72px 72px, 72px 72px, 36px 36px, 36px 36px;
-  background-color: #ffffff;
+  background-image: linear-gradient(#8a00cc 1px, transparent 1px), linear-gradient(to right, #8a00cc 1px, transparent 1px);
+background-size: 52px 52px;
+background-color: #ffffff;
 
   &:after {
     content: "";
