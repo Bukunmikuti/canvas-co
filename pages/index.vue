@@ -5,7 +5,8 @@
     <div id="content" ref="content" v-show="isContent">
       <img id="logo" src="/img/logo.svg" />
       <p>
-        The one-stop platform for all your business design and creative needs.
+        The one-stop platform for all your business design and
+        <span>creative needs.</span>
       </p>
     </div>
     <button v-show="isContent">Get Started Now</button>
@@ -43,9 +44,10 @@ onMounted(() => {
   opacity: 0.15;
   width: 100%;
   height: 50%;
-  background-image: linear-gradient(#8a00cc 1px, transparent 1px), linear-gradient(to right, #8a00cc 1px, transparent 1px);
-background-size: 52px 52px;
-background-color: #ffffff;
+  background-image: linear-gradient(#8a00cc 1px, transparent 1px),
+    linear-gradient(to right, #8a00cc 1px, transparent 1px);
+  background-size: 52px 52px;
+  background-color: #ffffff;
 
   &:after {
     content: "";
@@ -78,6 +80,32 @@ background-color: #ffffff;
     text-align: center;
     font-size: 1.9rem;
     margin-top: 25px;
+
+    span {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgb(245, 223, 231);
+      border-radius: 5px;
+      animation: bg 25s infinite;
+
+      @keyframes bg {
+        0% {
+          background: rgb(245, 235, 223);
+        }
+        25% {
+          background: rgb(223, 223, 245);
+        }
+        50% {
+          background: rgb(223, 245, 237);
+        }
+        75% {
+          background: rgb(231, 245, 223);
+        }
+        100% {
+          background: rgb(245, 223, 231);
+        }
+      }
+    }
   }
 
   #logo {
