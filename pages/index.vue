@@ -79,7 +79,7 @@ onMounted(() => {
     font-weight: 450;
     text-align: center;
     font-size: 1.9rem;
-    margin-top: 20px;
+    margin-top: 10px;
 
     span {
       display: inline-block;
