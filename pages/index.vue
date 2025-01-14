@@ -79,7 +79,7 @@ onMounted(() => {
     font-weight: 450;
     text-align: center;
     font-size: 1.9rem;
-    margin-top: 20px;
+    margin-top: 10px;
 
     span {
       display: inline-block;
@@ -87,6 +87,7 @@ onMounted(() => {
       background: rgb(245, 223, 231);
       border-radius: 5px;
       animation: bg 40s infinite;
+      margin-top: 5px;
 
       @keyframes bg {
         0% {
