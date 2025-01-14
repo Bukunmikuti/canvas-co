@@ -87,6 +87,7 @@ onMounted(() => {
       background: rgb(245, 223, 231);
       border-radius: 5px;
       animation: bg 40s infinite;
+      margin-top: 5px;
 
       @keyframes bg {
         0% {
