@@ -1,6 +1,5 @@
 <template>
   <div id="container">
-    <div id="pattern"></div>
     <img ref="logo-mark" id="logo-mark" src="/img/logo-mark.svg" />
     <div id="content" ref="content" v-show="isContent">
       <img id="logo" src="/img/logo.svg" />
@@ -9,7 +8,7 @@
         <span>creative needs.</span>
       </p>
     </div>
-    <button v-show="isContent">Get Started Now</button>
+    <button v-show="isContent" @click="toAuth">Get Started Now</button>
   </div>
 </template>
 
@@ -17,12 +16,20 @@
 const logoMark = templateRef("logo-mark");
 const isContent = ref(false);
 
+definePageMeta({
+  layout: 'auth'
+})
+
 onMounted(() => {
   setTimeout(() => {
     logoMark.value.style.display = "none";
     isContent.value = true;
   }, 900);
 });
+
+const toAuth = () => {
+  return navigateTo("/auth/signup");
+};
 </script>
 
 <style scoped lang="less">
@@ -35,35 +42,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
-}
-
-#pattern {
-  position: absolute;
-  top: 0;
-  z-index: -1;
-  opacity: 0.15;
-  width: 100%;
-  height: 50%;
-  background-image: linear-gradient(#8a00cc 1px, transparent 1px),
-    linear-gradient(to right, #8a00cc 1px, transparent 1px);
-  background-size: 52px 52px;
-  background-color: #ffffff;
-
-  &:after {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    bottom: 0;
-    left: 0;
-    pointer-events: none;
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 1) 90%
-    );
-    width: 100%;
-    height: 10em;
-  }
 }
 
 #content {
