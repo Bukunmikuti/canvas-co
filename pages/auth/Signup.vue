@@ -69,7 +69,7 @@ definePageMeta({
 
 #account-form {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   margin: 15px auto;
   padding: 20px;
   display: flex;

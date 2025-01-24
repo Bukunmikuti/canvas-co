@@ -69,7 +69,7 @@ definePageMeta({
 .wrapper {
   width: 100%;
   height: 100%;
-  max-width: 700px;
+  max-width: 600px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -101,6 +101,7 @@ definePageMeta({
   margin-top: 20px;
   //max-width: 400px;
   #google {
+    width: 100%;
     padding: 10px 15px;
     font-size: 1.6rem;
     border: 3px solid #d1d1d1;
