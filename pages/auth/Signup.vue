@@ -1,37 +1,37 @@
 <template>
-  <div class="title">
-    <h2>Create An Account</h2>
-    <p>Already have an account? <NuxtLink to="signin">Log in</NuxtLink></p>
+  <div id="signup">
+    <div class="title">
+      <h2>Create an Account</h2>
+      <p>Already have an account? <NuxtLink to="login">Log in</NuxtLink></p>
+    </div>
+    <form id="account-form">
+      <p id="error" v-show="errorMessage">
+        Your email or password is incorrect. Please try again.
+      </p>
+      <div>
+        <label for="email">What's your email?</label>
+        <input type="email" id="email" placeholder="you@example.com" />
+      </div>
+      <div>
+        <label for="password">Create a Password</label>
+        <input type="password" id="password" placeholder="Input password" />
+      </div>
+      <!-- <div>
+        <label for="confirm-password">Confirm Password</label>
+        <input
+          type="password"
+          id="confirm-password"
+          placeholder="Input password"
+        />
+      </div> -->
+      <button id="submit" type="submit">Sign Up</button>
+      <div id="divider"><span>OR</span></div>
+      <button id="google">
+        <Icon name="flat-color-icons:google" size="25"></Icon>
+        Continue with Google
+      </button>
+    </form>
   </div>
-
-  <form id="account-form">
-    <p id="error" v-show="errorMessage">Your email or password is incorrect. Please try again.</p>
-    <div>
-      <label for="email">What's your email?</label>
-      <input type="email" id="email" placeholder="you@example.com" />
-    </div>
-
-    <div>
-      <label for="password">Create a Password</label>
-      <input type="password" id="password" placeholder="Input password" />
-    </div>
-
-    <!-- <div>
-      <label for="confirm-password">Confirm Password</label>
-      <input
-        type="password"
-        id="confirm-password"
-        placeholder="Input password"
-      />
-    </div> -->
-
-    <button id="submit" type="submit">Sign Up</button>
-    <div id="divider"><span>OR</span></div>
-    <button id="google">
-      <Icon name="flat-color-icons:google" size="25"></Icon>
-      Continue with Google
-    </button>
-  </form>
 </template>
 
 <script setup>
@@ -42,6 +42,14 @@ definePageMeta({
 </script>
 
 <style scoped lang="less">
+#signup {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .title {
   text-align: center;
   h2 {
