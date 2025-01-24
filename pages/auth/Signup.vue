@@ -5,6 +5,7 @@
   </div>
 
   <form id="account-form">
+    <p id="error" v-show="errorMessage">Your email or password is incorrect. Please try again.</p>
     <div>
       <label for="email">What's your email?</label>
       <input type="email" id="email" placeholder="you@example.com" />
@@ -34,6 +35,7 @@
 </template>
 
 <script setup>
+const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
 });
@@ -51,7 +53,7 @@ definePageMeta({
     color: #b3b9c4;
     margin-top: 0px;
     a {
-      color: #4a006d;
+      color: #753c90;
       font-weight: bold;
     }
   }
@@ -64,6 +66,16 @@ definePageMeta({
   padding: 20px;
   display: flex;
   flex-direction: column;
+
+  #error {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgb(245, 232, 232);
+    color: #e25555;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
 
   div {
     margin-bottom: 15px;
@@ -117,12 +129,13 @@ definePageMeta({
   color: #b3b9c4;
   margin: 25px 0;
 
-  span { 
+  span {
     padding: 0 10px;
     font-weight: bold;
   }
 
-  &:before, &:after {
+  &:before,
+  &:after {
     content: "";
     flex: 1;
     border-bottom: 1px solid #dbdbdb;
