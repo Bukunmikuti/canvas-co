@@ -18,8 +18,7 @@ definePageMeta({
   middleware: [
     async () => {
       const user = await getCurrentUser();
-      console.log(user.email, "ok");
-      if (!user.email) {
+      if (!user) {
         return navigateTo("/auth/login");
       }
     },
@@ -27,12 +26,11 @@ definePageMeta({
 });
 
 const welcome = () => {
-  const user2 = useCurrentUser();
-  console.log(user2.value.email);
-  if (user2.value.displayName) {
-    return `Welcome ${user2.value.displayName}, your email is ${user2.value.email}`;
+  const user = useCurrentUser();
+  if (user.value.displayName) {
+    return `Welcome ${user.value.displayName}, your email is ${user.value.email}`;
   } else {
-    return `Welcome, your email is ${user2.value.email}`;
+    return `Welcome, your email is ${user.value.email}`;
   }
 };
 </script>

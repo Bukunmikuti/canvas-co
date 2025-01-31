@@ -44,6 +44,14 @@
 import { getAuth, createUserWithEmailAndPassword, sendSignInLinkToEmail } from "firebase/auth";
 definePageMeta({
   layout: "auth",
+  middleware: [
+    async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        return navigateTo("/dashboard");
+      }
+    },
+  ]
 });
 const email = ref("");
 const password = ref("");

@@ -50,6 +50,14 @@
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
+  middleware: [
+    async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        return navigateTo("/dashboard");
+      }
+    },
+  ]
 });
 
 const toVerify = () => {

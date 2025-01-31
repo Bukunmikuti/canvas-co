@@ -8,5 +8,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   } else if (!user.emailVerified && to.path !== "/auth/verify") {
     console.log("email not verified");
     return navigateTo({ path: "/auth/verify" });
+  } else if (user.emailVerified) {
+    console.log("email verified");
+    return navigateTo({ path: "/dashboard" });
   }
 });
