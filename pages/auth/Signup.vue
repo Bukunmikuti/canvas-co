@@ -4,20 +4,34 @@
       <h2>Create an Account</h2>
       <p>Already have an account? <NuxtLink to="login">Log in</NuxtLink></p>
     </div>
+
+    <!-- Form to collect user signup details -->
     <form id="account-form">
       <p id="error" v-show="errorMessage">
-        Your email or password is incorrect. Please try again.
+        {{ errorMessage }}
       </p>
       <div>
         <label for="email">What's your email?</label>
-        <input type="email" id="email" placeholder="you@example.com" />
+        <input
+          v-model="email"
+          type="email"
+          id="email"
+          placeholder="you@example.com"
+        />
       </div>
       <div>
         <label for="password">Create a Password</label>
-        <input type="password" id="password" placeholder="Input password" />
+        <input
+          v-model="password"
+          type="password"
+          id="password"
+          placeholder="Input password"
+        />
       </div>
-      <button id="submit" type="submit" @click.prevent="toVerify">Sign Up</button>
+      <button id="submit" type="submit" @click.prevent="signUp">Sign Up</button>
       <div id="divider"><span>OR</span></div>
+
+      <!-- Sign up with Google Button -->
       <button id="google">
         <Icon name="flat-color-icons:google" size="25"></Icon>
         Continue with Google
@@ -27,10 +41,41 @@
 </template>
 
 <script setup>
-const errorMessage = ref(false);
+import { getAuth, createUserWithEmailAndPassword, sendSignInLinkToEmail } from "firebase/auth";
 definePageMeta({
   layout: "auth",
 });
+const email = ref("");
+const password = ref("");
+const errorMessage = ref(false);
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: 'http://localhost:3000/auth/verify',
+  handleCodeInApp: true,
+};
+const auth = getAuth();
+
+const signUp = async () => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+    const user = userCredential.user;
+    await sendEmailVerification(user);
+    return navigateTo("/auth/verify");
+  } catch (error) {
+    errorMessage.value = "An error occurred. Please try again.";
+    console.log(error)
+  }
+}
+
+const sendEmailVerification = async (user) => {
+  try {
+    await sendSignInLinkToEmail(auth, user.email, actionCodeSettings);
+    window.localStorage.setItem('emailForSignIn', user.email);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 /* const toVerify = () => {
   return navigateTo("/auth/verify");

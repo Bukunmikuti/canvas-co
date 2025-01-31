@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
 });
