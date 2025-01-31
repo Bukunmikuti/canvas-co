@@ -16,15 +16,7 @@
         <label for="password">Create a Password</label>
         <input type="password" id="password" placeholder="Input password" />
       </div>
-      <!-- <div>
-        <label for="confirm-password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          placeholder="Input password"
-        />
-      </div> -->
-      <button id="submit" type="submit">Sign Up</button>
+      <button id="submit" type="submit" @click.prevent="toVerify">Sign Up</button>
       <div id="divider"><span>OR</span></div>
       <button id="google">
         <Icon name="flat-color-icons:google" size="25"></Icon>
@@ -39,6 +31,10 @@ const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
 });
+
+/* const toVerify = () => {
+  return navigateTo("/auth/verify");
+}; */
 </script>
 
 <style scoped lang="less">

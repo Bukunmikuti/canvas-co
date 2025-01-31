@@ -36,7 +36,7 @@
           placeholder="Input password"
         />
       </div> -->
-          <button id="submit" type="submit">Sign Up</button>
+          <button id="submit" @click.prevent="toVerify">Sign Up</button>
         </form>
       </div>
     </div>
@@ -50,6 +50,10 @@
 definePageMeta({
   layout: "auth",
 });
+
+const toVerify = () => {
+  //return navigateTo("auth/verify");
+};
 </script>
 
 <style scoped lang="less">
