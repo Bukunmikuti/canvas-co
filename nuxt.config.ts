@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
   ssr: false,
-  modules: ["@nuxt/icon", "@vueuse/nuxt"],
+  modules: ["@nuxt/icon", "@vueuse/nuxt", "nuxt-vuefire"],
   app: {
     head: {
       link: [
@@ -32,6 +32,20 @@ export default defineNuxtConfig({
           additionalData: `@import './assets/css/theme.less';`,
         },
       },
+    },
+  },
+  vuefire: {
+    config: {
+      apiKey: "AIzaSyClEeSJnjwx_nfsaGiA1pTs4XsMLnbmr7c",
+      authDomain: "ezer-dev.firebaseapp.com",
+      projectId: "ezer-dev",
+      storageBucket: "ezer-dev.firebasestorage.app",
+      messagingSenderId: "269482856850",
+      appId: "1:269482856850:web:efca1678e7cf4d212d714b",
+      measurementId: "G-0NMVD71REG",
+    },
+    auth: {
+      enabled: true,
     },
   },
 });
