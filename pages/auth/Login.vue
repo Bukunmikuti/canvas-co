@@ -11,7 +11,7 @@
       </div>
 
       <div id="form-wrapper">
-        <button id="google">
+        <button id="google" @click.prevent="useGoogle">
           <Icon name="flat-color-icons:google" size="25"></Icon>
           Continue with Google
         </button>
@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+import { getAuth, createUserWithEmailAndPassword, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
@@ -60,9 +61,20 @@ definePageMeta({
   ]
 });
 
-const toVerify = () => {
-  //return navigateTo("auth/verify");
-};
+const useGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    const user = result.user;
+    console.log(user)
+    return navigateTo("/dashboard");
+  } catch (error) {
+    console.log(error);
+    errorMessage.value = "An error occurred. Please try again.";
+  }
+  // Implement Google Sign Up
+}
 </script>
 
 <style scoped lang="less">
