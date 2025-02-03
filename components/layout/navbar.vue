@@ -1,11 +1,25 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { getCurrentUser } from "vuefire";
 import { Bell, SearchIcon, ChevronDown } from "lucide-vue-next";
 import MakeRequestDialog from "../MakeRequestDialog.vue";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
+const displayName = ref<string | null>(null);
+const email = ref<string | null>(null);
+
+onMounted(async () => {
+  const user = await getCurrentUser();
+  if (!user) {
+    return navigateTo("/auth/login");
+  } else {
+    const currentUser = useCurrentUser();
+    displayName.value = currentUser.value?.displayName || null;
+    email.value = currentUser.value?.email || null;
+  }
+});
 
 const isOpen = ref(false);
-const isMenuOpen = ref(false);
 
 const openDialog = () => {
   isOpen.value = true;
@@ -14,13 +28,16 @@ const closeDialog = () => {
   isOpen.value = false;
 };
 
-const openMenu = () => {
-  isMenuOpen.value = true;
-};
+// Will work on the menu later
 
-const closeMenu = () => {
-  isMenuOpen.value = false;
-};
+// const isMenuOpen = ref(false);
+// const openMenu = () => {
+//   isMenuOpen.value = true;
+// };
+
+// const closeMenu = () => {
+//   isMenuOpen.value = false;
+// };
 </script>
 
 <template>
@@ -44,12 +61,12 @@ const closeMenu = () => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
-      <div class="flex">
+      <div class="flex leading-tight">
         <div>
-          <h1 class="text-[16px] font-[500] text-[#1B293A]">
-            Ifedolapo Durojaiye
+          <h1 class="text-[16px] font-[500] text-[#1B293A]" v-if="displayName">
+            {{ displayName }}
           </h1>
-          <p class="text-[#7A8699] text-[12px]">ifedolapodurojaiye@gmail.com</p>
+          <p class="text-[#7A8699] text-[12px]" v-if="email">{{ email }}</p>
         </div>
         <ChevronDown />
       </div>

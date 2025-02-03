@@ -53,7 +53,7 @@ const menuList = ref([
           <a :href="`${item.path}`" class="flex items-center gap-2">
             <component
               :is="item.icon"
-              :class="`w-5 h-5  ${
+              :class="`w-8 h-8  ${
                 pathname.includes(item.path) ? 'text-white' : 'text-[#42526D]'
               }`"
             />
@@ -62,7 +62,7 @@ const menuList = ref([
                 pathname.includes(item.path)
                   ? 'text-[#091E42] font-[700]'
                   : 'text-[#42526D]'
-              }`"
+              } h-full`"
             >
               {{ item.name }}
             </p>
