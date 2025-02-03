@@ -1,6 +1,16 @@
+<script lang="js">
+import Toaster from '@/components/ui/toast/Toaster.vue'
+</script>
+
 <template>
   <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <Head>
+      <Title>Canvas&Co</Title>
+      <Meta name="description" />
+    </Head>
+    <NuxtLayout>
+      <Toaster />
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
