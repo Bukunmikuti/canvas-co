@@ -50,7 +50,10 @@ const menuList = ref([
           :class="`py-5 pl-10`"
         >
           <div class="border-l-[4px] border-red-500 z-10" />
-          <a :href="`${item.path}`" class="flex items-center gap-2">
+          <a
+            :href="`${item.path}`"
+            class="flex items-center gap-2 no-underline"
+          >
             <component
               :is="item.icon"
               :class="`w-8 h-8  ${
