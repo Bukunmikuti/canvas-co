@@ -62,7 +62,7 @@
   .text {
     padding: 30px 40px;
     font-weight: 700;
-    font-size: 4.7rem;
+    font-size: 4.3rem;
     color: white;
     font-family: Poppins, sans-serif;
     line-height: 1.3;
