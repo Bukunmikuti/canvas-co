@@ -1,53 +1,52 @@
 <template>
   <div id="login">
+    <h1>Login</h1>
     <div class="wrapper">
-      <div id="header">
-        <img src="../../public/img/logo.svg" alt="login" />
-        <NuxtLink id="signup-btn" to="signup">Create an account</NuxtLink>
-      </div>
-      <div class="title">
-        <h2>Login</h2>
-        <p>Sign in if you already have an account</p>
-      </div>
-
-      <div id="form-wrapper">
-        <button id="google" @click.prevent="useGoogle">
-          <Icon name="flat-color-icons:google" size="25"></Icon>
-          Continue with Google
+      <div id="providers">
+        <button id="google" @click="useGoogle">
+          <Icon name="flat-color-icons:google" size="27px"></Icon>
+          <span>Sign in with Google</span>
         </button>
-        <div id="divider"><span>OR</span></div>
-        <form id="account-form">
-          <p id="error" v-show="errorMessage">
-            Your email or password is incorrect. Please try again.
-          </p>
-          <div>
-            <label for="email">What's your email?</label>
-            <input type="email" id="email" placeholder="you@example.com" />
-          </div>
-          <div>
-            <label for="password">Create a Password</label>
-            <input type="password" id="password" placeholder="Input password" />
-          </div>
-          <!-- <div>
-        <label for="confirm-password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          placeholder="Input password"
-        />
-      </div> -->
-          <button id="submit" @click.prevent="toVerify">Sign Up</button>
-        </form>
       </div>
+      <div id="divider">
+        <span>or</span>
+      </div>
+      <form id="account-form" @submit="login">
+        <div v-if="errorMessage" id="error">{{ errorMessage }}</div>
+        <div>
+          <label for="email">Email</label>
+          <input
+            placeholder="name@example.com"
+            type="email"
+            id="email"
+            v-model="email"
+          />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input
+            placeholder="password"
+            type="password"
+            id="password"
+            v-model="password"
+          />
+          <p id="forget-pwd"><NuxtLink to="#">Forgot password?</NuxtLink></p>
+        </div>
+        <button id="submit">Login</button>
+        <NuxtLink to="/auth/Signup.vue" id="signup-link">Don't have an account? Sign up</NuxtLink>
+      </form>
     </div>
-    <!-- <div class="side-design">
-      <img src="../../public/img/login-image.svg" alt="login" />
-    </div> -->
   </div>
 </template>
 
 <script setup>
-import { getAuth, createUserWithEmailAndPassword, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendSignInLinkToEmail,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
@@ -58,7 +57,7 @@ definePageMeta({
         return navigateTo("/dashboard");
       }
     },
-  ]
+  ],
 });
 
 const useGoogle = async () => {
@@ -67,72 +66,47 @@ const useGoogle = async () => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     const user = result.user;
-    console.log(user)
+    console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
     console.log(error);
     errorMessage.value = "An error occurred. Please try again.";
   }
   // Implement Google Sign Up
-}
+};
 </script>
 
 <style scoped lang="less">
 #login {
   width: 100%;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //display: grid;
-  //grid-template-columns: 1fr minmax(auto, 40%);
-  //justify-content: flex-start;
+  max-width: 400px;
+
+  h1 {
+    font-weight: 500;
+    letter-spacing: -2px;
+    font-size: 3.7rem;
+  }
 }
 
 .wrapper {
   width: 100%;
-  height: 100%;
-  max-width: 600px;
+  max-width: 400px;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  #header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    #signup-btn {
-      font-size: 1.65rem;
-      margin-top: 0px;
-      color: #753c90;
-      font-weight: bold;
-    }
-  }
-
-  .title {
-    margin-top: 50px;
-    p {
-      color: #b3b9c4;
-    }
-  }
 }
 
-#form-wrapper {
-  margin-top: 20px;
-  //max-width: 400px;
+#providers {
   #google {
     width: 100%;
     padding: 10px 15px;
     font-size: 1.6rem;
-    border: 3px solid #d1d1d1;
-    border-radius: 7px;
-    background-color: #fff;
-    color: #220033;
+    border-radius: 30px;
+    background-color: #e5e5e5;
+    color: rgb(36, 21, 43);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -140,10 +114,11 @@ const useGoogle = async () => {
 
     span {
       margin-right: 10px;
+      font-weight: 500;
     }
 
     &:hover {
-      background: #f5f5f5;
+      background: darken(#e5e5e5, 10%);
     }
   }
 }
@@ -167,7 +142,7 @@ const useGoogle = async () => {
   }
 
   div {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     label {
       font-size: 1.6rem;
@@ -178,11 +153,12 @@ const useGoogle = async () => {
 
     input {
       width: 100%;
-      padding: 10px;
+      padding: 15px 20px;
       font-size: 1.4rem;
-      border: 3px solid #d7d7d7;
+      background: #e5e5e5;
       color: inherit;
-      border-radius: 5px;
+      border-radius: 30px;
+      border: none;
       outline: none;
 
       &:focus {
@@ -191,19 +167,39 @@ const useGoogle = async () => {
     }
   }
 
+  #forget-pwd {
+    margin-top: 10px;
+    color: #a63bbe;
+    font-weight: 500;
+    text-align: right;
+    padding: 0 10px;
+
+    a {
+      color: inherit;
+      font-weight: 500;
+    }
+  }
+
+  #signup-link {
+    font-weight: 500;
+    text-align: center;
+    margin-top: 10px;
+    color: #212225;
+  }
+
   #submit {
     width: 100%;
-    padding: 10px;
-    font-size: 1.6rem;
+    padding: 12px;
+    font-size: 1.7rem;
     border: none;
-    border-radius: 5px;
-    background-color: #a900ff;
+    border-radius: 30px;
+    background-color: #b300df;
     color: #fff;
     cursor: pointer;
     margin-top: 5px;
 
     &:hover {
-      background: #8a00cc;
+      background: #9501b9;
     }
   }
 }
@@ -212,13 +208,15 @@ const useGoogle = async () => {
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   text-align: center;
   font-size: 1.6rem;
-  color: #b3b9c4;
-  margin: 25px 0;
+  color: #212225;
+  font-weight: 500;
+  margin: 15px 0;
 
-  span {
+  /* span {
     padding: 0 10px;
     font-weight: bold;
   }
@@ -228,7 +226,7 @@ const useGoogle = async () => {
     content: "";
     flex: 1;
     border-bottom: 1px solid #dbdbdb;
-  }
+  } */
 }
 
 .side-design {
