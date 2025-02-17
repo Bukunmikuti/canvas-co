@@ -13,14 +13,17 @@
             v-model="email"
           />
         </div>
-        <button id="submit" @click="login">Continue</button>
-        <NuxtLink to="/auth/signup" id="signup-link">Don't have an account? Sign up</NuxtLink>
+        <button id="submit" @click="reset">Continue</button>
+        <NuxtLink to="/auth/signup" id="signup-link"
+          >Don't have an account? Sign up</NuxtLink
+        >
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
@@ -33,6 +36,14 @@ definePageMeta({
     },
   ],
 });
+
+const reset = async () => {
+  try {
+    await sendPasswordResetEmail(auth.currentUser);
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style scoped lang="less">
