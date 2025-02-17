@@ -56,17 +56,17 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 20px;
 
   .text {
     padding: 30px 40px;
-    font-weight: 700;
-    font-size: 4.3rem;
+    font-weight: 600;
+    font-size: 5rem;
     color: white;
     font-family: Poppins, sans-serif;
     line-height: 1.3;
-    letter-spacing: -0.8px;
+    letter-spacing: -2.1px;
   }
 }
 </style>

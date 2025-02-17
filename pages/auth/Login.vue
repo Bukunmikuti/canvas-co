@@ -32,8 +32,8 @@
           />
           <p id="forget-pwd"><NuxtLink to="#">Forgot password?</NuxtLink></p>
         </div>
-        <button id="submit">Login</button>
-        <NuxtLink to="/auth/Signup.vue" id="signup-link">Don't have an account? Sign up</NuxtLink>
+        <button id="submit" @click="login">Login</button>
+        <NuxtLink to="/auth/signup" id="signup-link">Don't have an account? Sign up</NuxtLink>
       </form>
     </div>
   </div>
@@ -146,7 +146,8 @@ const useGoogle = async () => {
 
     label {
       font-size: 1.6rem;
-      color: #b3b9c4;
+      color: #383838;
+      font-weight: 500;
       display: block;
       margin-bottom: 5px;
     }
@@ -163,6 +164,14 @@ const useGoogle = async () => {
 
       &:focus {
         border-color: #8a8a8a;
+      }
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s;
+        color: white !important;
       }
     }
   }
@@ -183,8 +192,8 @@ const useGoogle = async () => {
   #signup-link {
     font-weight: 500;
     text-align: center;
-    margin-top: 10px;
-    color: #212225;
+    margin-top: 20px;
+    color: #a63bbe;
   }
 
   #submit {
@@ -215,18 +224,6 @@ const useGoogle = async () => {
   color: #212225;
   font-weight: 500;
   margin: 15px 0;
-
-  /* span {
-    padding: 0 10px;
-    font-weight: bold;
-  }
-
-  &:before,
-  &:after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid #dbdbdb;
-  } */
 }
 
 .side-design {
