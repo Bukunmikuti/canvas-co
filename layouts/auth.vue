@@ -26,12 +26,20 @@
   height: 100vh;
   font-family: "Poppins", sans-serif;
   display: grid;
-  grid-template-columns: 1fr minmax(auto, 40%);
+  grid-template-columns: 1fr;
+
+  @media @desktop {
+    grid-template-columns: 1fr minmax(auto, 40%);
+  }
 }
 
 .sidebar {
   padding: 20px;
+  display: none;
   //background: red;
+  @media @desktop {
+    display: block;
+  }
 }
 
 .page {
