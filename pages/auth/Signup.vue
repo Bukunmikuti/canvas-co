@@ -52,7 +52,7 @@
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  sendSignInLinkToEmail,
+  sendEmailVerification,
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
@@ -89,7 +89,7 @@ const signUp = async () => {
       password.value
     );
     const user = userCredential.user;
-    await sendEmailVerification(user);
+    await emailVerification(user);
     isLoading.value = false;
     return navigateTo("/auth/verify");
   } catch (error) {
@@ -99,9 +99,9 @@ const signUp = async () => {
   }
 };
 
-const sendEmailVerification = async (user) => {
+const emailVerification = async (user) => {
   try {
-    await sendSignInLinkToEmail(auth, user.email, actionCodeSettings);
+    await sendEmailVerification(auth.currentUser);
     window.localStorage.setItem("emailForSignIn", user.email);
   } catch (error) {
     console.log(error);

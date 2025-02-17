@@ -1,16 +1,7 @@
 <template>
-  <div id="login">
-    <h1>Login</h1>
+  <div id="reset">
+    <h1>Reset Password</h1>
     <div class="wrapper">
-      <div id="providers">
-        <button id="google" @click="useGoogle">
-          <Icon name="flat-color-icons:google" size="27px"></Icon>
-          <span>Sign in with Google</span>
-        </button>
-      </div>
-      <div id="divider">
-        <span>or</span>
-      </div>
       <form id="account-form" @submit="login">
         <div v-if="errorMessage" id="error">{{ errorMessage }}</div>
         <div>
@@ -22,17 +13,7 @@
             v-model="email"
           />
         </div>
-        <div>
-          <label for="password">Password</label>
-          <input
-            placeholder="password"
-            type="password"
-            id="password"
-            v-model="password"
-          />
-          <p id="forget-pwd"><NuxtLink to="reset">Forgot password?</NuxtLink></p>
-        </div>
-        <button id="submit" @click="login">Login</button>
+        <button id="submit" @click="login">Continue</button>
         <NuxtLink to="/auth/signup" id="signup-link">Don't have an account? Sign up</NuxtLink>
       </form>
     </div>
@@ -40,13 +21,6 @@
 </template>
 
 <script setup>
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendSignInLinkToEmail,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
@@ -59,25 +33,10 @@ definePageMeta({
     },
   ],
 });
-
-const useGoogle = async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
-    console.log(user);
-    return navigateTo("/dashboard");
-  } catch (error) {
-    console.log(error);
-    errorMessage.value = "An error occurred. Please try again.";
-  }
-  // Implement Google Sign Up
-};
 </script>
 
 <style scoped lang="less">
-#login {
+#reset {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -97,30 +56,6 @@ const useGoogle = async () => {
   width: 100%;
   max-width: 400px;
   padding: 20px;
-}
-
-#providers {
-  #google {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 1.6rem;
-    border-radius: 30px;
-    background-color: #e5e5e5;
-    color: rgb(36, 21, 43);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span {
-      margin-right: 10px;
-      font-weight: 500;
-    }
-
-    &:hover {
-      background: darken(#e5e5e5, 10%);
-    }
-  }
 }
 
 #account-form {
@@ -176,19 +111,6 @@ const useGoogle = async () => {
     }
   }
 
-  #forget-pwd {
-    margin-top: 10px;
-    color: #a63bbe;
-    font-weight: 500;
-    text-align: right;
-    padding: 0 10px;
-
-    a {
-      color: inherit;
-      font-weight: 500;
-    }
-  }
-
   #signup-link {
     font-weight: 500;
     text-align: center;
@@ -210,38 +132,6 @@ const useGoogle = async () => {
     &:hover {
       background: #9501b9;
     }
-  }
-}
-
-#divider {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  text-align: center;
-  font-size: 1.6rem;
-  color: #212225;
-  font-weight: 500;
-  margin: 15px 0;
-}
-
-.side-design {
-  display: none;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0 20px;
-  //background: red;
-  overflow: hidden;
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transform: scale(0.97);
-    //transform: translate(50px, 100px);
-    border-radius: 15px;
   }
 }
 </style>
