@@ -106,7 +106,7 @@ const useGoogle = async () => {
     font-size: 1.6rem;
     border-radius: 30px;
     background-color: #e5e5e5;
-    color: rgb(36, 21, 43);
+    color: rgb(45, 19, 57);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -192,8 +192,8 @@ const useGoogle = async () => {
   #signup-link {
     font-weight: 500;
     text-align: center;
-    margin-top: 20px;
-    color: #a63bbe;
+    margin-top: 10px;
+    color: inherit;
   }
 
   #submit {

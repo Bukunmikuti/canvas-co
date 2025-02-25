@@ -24,12 +24,12 @@
 #auth-layout {
   width: 100%;
   height: 100vh;
-  font-family: "Poppins", sans-serif;
+  font-family: "Okine Sans", sans-serif;
   display: grid;
   grid-template-columns: 1fr;
 
   @media @desktop {
-    grid-template-columns: 1fr minmax(auto, 40%);
+    grid-template-columns: 1fr minmax(auto, 38%);
   }
 }
 
@@ -72,9 +72,7 @@
     font-weight: 600;
     font-size: 5rem;
     color: white;
-    font-family: Poppins, sans-serif;
     line-height: 1.3;
-    letter-spacing: -2.1px;
   }
 }
 </style>

@@ -16,7 +16,7 @@
   //justify-content: center;
   //align-items: center;
   //flex-direction: column;
-  font-family: "Poppins", sans-serif;
+  font-family: "Okine Sans", sans-serif;
 }
 
 #pattern {

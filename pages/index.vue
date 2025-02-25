@@ -41,7 +41,7 @@ const toAuth = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Poppins", sans-serif;
+  font-family: "Okine Sans", sans-serif;
 }
 
 #content {
