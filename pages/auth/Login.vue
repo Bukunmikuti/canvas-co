@@ -102,7 +102,7 @@ const useGoogle = async () => {
 #providers {
   #google {
     width: 100%;
-    padding: 10px 15px;
+    padding: 12px 15px;
     font-size: 1.6rem;
     border-radius: 30px;
     background-color: #e5e5e5;

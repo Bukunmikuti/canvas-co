@@ -178,7 +178,7 @@ h1 {
     input {
       width: 100%;
       padding: 15px 20px;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       background: #e5e5e5;
       color: inherit;
       border-radius: 30px;
@@ -215,8 +215,8 @@ h1 {
   #signup-link {
     font-weight: 500;
     text-align: center;
-    margin-top: 20px;
-    color: #a63bbe;
+    margin-top: 10px;
+    color: inherit;
   }
 
   #submit {
@@ -239,8 +239,8 @@ h1 {
 #login-link {
   font-weight: 500;
   text-align: center;
-  margin-top: 20px;
-  color: #a63bbe;
+  margin-top: 10px;
+  color: inherit;
 }
 
 #divider {
@@ -260,7 +260,7 @@ h1 {
   margin-top: 30px;
   #google {
     width: 100%;
-    padding: 10px 15px;
+    padding: 12px 15px;
     font-size: 1.6rem;
     border-radius: 30px;
     background-color: #e5e5e5;
