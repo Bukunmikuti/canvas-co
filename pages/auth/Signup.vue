@@ -35,7 +35,7 @@
             placeholder="Input password"
           />
         </div>
-        <button id="submit" type="submit" @click.prevent="signUp">
+        <button id="submit" type="submit" @click.prevent="signup">
           <Icon v-if="isLoading" name="line-md:loading-loop"></Icon>
           <span v-else>Sign Up</span>
         </button>
@@ -49,14 +49,7 @@
 </template>
 
 <script setup>
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-const provider = new GoogleAuthProvider();
+import { signin_with_google, signup_email } from "#imports";
 definePageMeta({
   layout: "auth-layout",
   middleware: [
@@ -72,48 +65,22 @@ const email = ref("");
 const password = ref("");
 const errorMessage = ref(false);
 const isLoading = ref(false);
-const actionCodeSettings = {
-  // URL you want to redirect back to. The domain (www.example.com) for this
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: "http://localhost:3000/auth/verify",
-  handleCodeInApp: true,
-};
-const auth = getAuth();
 
-const signUp = async () => {
+const signup = async () => {
   try {
     isLoading.value = true;
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email.value,
-      password.value
-    );
-    const user = userCredential.user;
-    await emailVerification(user);
+    const user = await signup_email();
     isLoading.value = false;
     return navigateTo("/auth/verify");
   } catch (error) {
     isLoading.value = false;
     errorMessage.value = "An error occurred. Please try again.";
-    console.log(error);
-  }
-};
-
-const emailVerification = async (user) => {
-  try {
-    await sendEmailVerification(auth.currentUser);
-    window.localStorage.setItem("emailForSignIn", user.email);
-  } catch (error) {
-    console.log(error);
   }
 };
 
 const useGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
+    const user = await signin_with_google();
     console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
