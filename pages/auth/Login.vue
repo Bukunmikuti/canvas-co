@@ -50,14 +50,7 @@ import {
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth-layout",
-  middleware: [
-    async () => {
-      const user = await getCurrentUser();
-      if (user) {
-        return navigateTo("/dashboard");
-      }
-    },
-  ],
+  middleware: ['login-guard'],
 });
 
 const useGoogle = async () => {

@@ -7,22 +7,9 @@
 
 <script setup>
 import { getCurrentUser } from "vuefire";
-const dem = ref({
-  user: {
-    displayName: "John Doe",
-    email: "",
-  },
-});
 
 definePageMeta({
-  middleware: [
-    async () => {
-      const user = await getCurrentUser();
-      if (!user) {
-        return navigateTo("/auth/login");
-      }
-    },
-  ],
+  middleware: ['dashboard-guard'],
 });
 
 const welcome = () => {

@@ -19,16 +19,7 @@ import {
 } from "firebase/auth";
 definePageMeta({
   layout: "auth-layout",
-  middleware: [
-    "auth",
-    async () => {
-      const user = await getCurrentUser();
-      if (user.emailVerified) {
-        /* Take user to dashboard */
-        //return redirect('/dashboard');
-      }
-    },
-  ],
+  middleware: ["verify-guard"],
 });
 
 const completeVerification = async () => {

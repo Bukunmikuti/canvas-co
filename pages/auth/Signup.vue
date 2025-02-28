@@ -52,14 +52,7 @@
 import { signin_with_google, signup_email } from "#imports";
 definePageMeta({
   layout: "auth-layout",
-  middleware: [
-    async () => {
-      const user = await getCurrentUser();
-      if (user) {
-        return navigateTo("/dashboard");
-      }
-    },
-  ],
+  middleware: ['login-guard'],
 });
 const email = ref("");
 const password = ref("");
