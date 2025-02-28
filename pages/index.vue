@@ -17,7 +17,7 @@ const logoMark = templateRef("logo-mark");
 const isContent = ref(false);
 
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth-layout',
 })
 
 onMounted(() => {

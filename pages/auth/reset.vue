@@ -26,7 +26,7 @@
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
-  layout: "auth",
+  layout: "auth-layout",
   middleware: [
     async () => {
       const user = await getCurrentUser();

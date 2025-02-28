@@ -18,7 +18,7 @@ import {
   signInWithEmailLink,
 } from "firebase/auth";
 definePageMeta({
-  layout: "auth",
+  layout: "auth-layout",
   middleware: [
     "auth",
     async () => {

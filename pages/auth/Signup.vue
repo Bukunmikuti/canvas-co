@@ -58,7 +58,7 @@ import {
 } from "firebase/auth";
 const provider = new GoogleAuthProvider();
 definePageMeta({
-  layout: "auth",
+  layout: "auth-layout",
   middleware: [
     async () => {
       const user = await getCurrentUser();
