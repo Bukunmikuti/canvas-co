@@ -72,7 +72,7 @@
     font-weight: 600;
     font-size: 5rem;
     color: white;
-    line-height: 1.3;
+    line-height: 1.2;
   }
 }
 </style>
