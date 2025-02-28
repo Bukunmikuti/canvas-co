@@ -52,7 +52,7 @@
 import { signin_with_google, signup_email } from "#imports";
 definePageMeta({
   layout: "auth-layout",
-  middleware: ['login-guard'],
+  middleware: ["login-guard"],
 });
 const email = ref("");
 const password = ref("");
@@ -67,7 +67,7 @@ const signup = async () => {
     return navigateTo("/auth/verify");
   } catch (error) {
     isLoading.value = false;
-    errorMessage.value = "An error occurred. Please try again.";
+    errorMessage.value = error;
   }
 };
 
@@ -78,7 +78,7 @@ const useGoogle = async () => {
     return navigateTo("/dashboard");
   } catch (error) {
     console.log(error);
-    errorMessage.value = "An error occurred. Please try again.";
+    errorMessage.value = error;
   }
 };
 </script>

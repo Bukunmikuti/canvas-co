@@ -4,6 +4,7 @@ import {
   sendEmailVerification,
   signInWithPopup,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 const actionCodeSettings = {
@@ -24,6 +25,20 @@ export const signup_email = async () => {
     );
     const user = userCredential.user;
     await emailVerification(user);
+    return user;
+  } catch (error) {
+    throw new Error("An error occurred. Please try again.");
+  }
+};
+
+export const signin_email = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
     return user;
   } catch (error) {
     throw new Error("An error occurred. Please try again.");

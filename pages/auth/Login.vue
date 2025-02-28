@@ -40,32 +40,36 @@
 </template>
 
 <script setup>
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendSignInLinkToEmail,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth-layout",
   middleware: ['login-guard'],
 });
 
+const email = ref('')
+const password = ref('')
+
+const login = async () => {
+  try {
+    isLoading.value = true;
+    const user = await signin_email(email.value, password.value);
+    isLoading.value = false;
+    return navigateTo("dashboard");
+  } catch (error) {
+    isLoading.value = false;
+    errorMessage.value = error;
+  }
+};
+
 const useGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
+    const user = await signin_with_google();
     console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
     console.log(error);
-    errorMessage.value = "An error occurred. Please try again.";
+    errorMessage.value = error;
   }
-  // Implement Google Sign Up
 };
 </script>
 
