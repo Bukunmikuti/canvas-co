@@ -1,10 +1,9 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div>
-        <h1>Settings</h1>
+  <div>
+    <div class="flex justify-center items-center w-[80vw] h-[87vh] text-[30px]">
+      Coming Soon
     </div>
+  </div>
 </template>
-

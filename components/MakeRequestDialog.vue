@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 const isCustomSizeDialogOpen = ref(false);
 import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
@@ -14,6 +24,8 @@ const props = defineProps({
 const emit = defineEmits(["update:open", "confirm"]);
 const closeDialog = () => {
   emit("update:open", false);
+
+  // Toast a success or error message
   // toast({
   //   title: "Scheduled: Catch up",
   //   description: "Friday, February 10, 2023 at 5:57 PM",
@@ -32,10 +44,12 @@ const closeCustomSizeDialog = () => {
 <template>
   <div>
     <Dialog :open="open" @update:open="$emit('update:open', $event)">
-      <DialogContent class="h-[80vh] bg-white min-w-[40vw]">
+      <DialogContent
+        class="h-fit max-h-[80vh] overflow-auto bg-white min-w-[40vw] px-10"
+      >
         <DialogHeader>
           <DialogTitle>Make a Design Request</DialogTitle>
-          <p class="text-[#C2C7D0] text-[12px]">
+          <p class="text-[#C2C7D0] text-[14px]">
             Browse and customize designs made specifically for industries like
             yours
           </p>
@@ -43,17 +57,17 @@ const closeCustomSizeDialog = () => {
 
         <div class="space-y-4">
           <div class="space-y-2">
-            <Label for="description" class="text-[#5E5E5E] text-sm">
+            <Label for="description" class="text-[#5E5E5E]">
               Add Description
             </Label>
             <Textarea
               id="description"
               placeholder="Add a description about this case"
-              class="h-[200px]"
+              class="h-[200px] text-[12px] font-[500] placeholder:text-[#DBDBDB]"
             />
           </div>
-          <div class="space-y-2">
-            <Select class="w-full bg-black">
+          <div class="p-2 space-y-2 border rounded-[8px]">
+            <Select>
               <SelectTrigger>
                 <SelectValue placeholder="Select Size" />
               </SelectTrigger>
@@ -88,27 +102,25 @@ const closeCustomSizeDialog = () => {
             </Select>
           </div>
           <div class="space-y-2">
-            <Label for="document" class="text-[#5E5E5E] text-sm">
+            <Label for="document" class="text-[#5E5E5E]">
               Supporting Document (optional)
             </Label>
             <div
-              class="border border-dashed flex justify-center items-center py-5 flex-col"
+              class="border border-dashed border-[#D0D5DD] rounded-[16px] flex justify-center items-center py-5 flex-col"
             >
-              <div>
-                <p class="text-sm text-[#C655FF]">
+              <div class="text-[10px]">
+                <p class="text-[#C655FF]">
                   Click to upload
                   <span class="text-[#475367]">or drag and drop</span>
                 </p>
-                <div class="flex text-[#98A2B3] text-center text-sm">
+                <div class="flex text-[#98A2B3] text-center">
                   <p>OR</p>
                 </div>
-                <p class="text-[#98A2B3] text-xs">
+                <p class="text-[#98A2B3]">
                   SVG, PNG, JPG or GIF (max. 800x400px)
                 </p>
               </div>
-              <button
-                class="bg-[#A900FF] text-white text-sm px-3 py-1 rounded-sm"
-              >
+              <button class="bg-[#A900FF] text-white px-3 py-1 rounded-sm">
                 Browse Files
               </button>
             </div>
@@ -124,7 +136,7 @@ const closeCustomSizeDialog = () => {
 
         <DialogFooter>
           <button
-            class="text-white w-full py-2 rounded-[8px] bg-[#A900FF]"
+            class="text-white w-full py-2 rounded-[8px] bg-[#220033] py-5 text-[15px]"
             @click="closeDialog"
           >
             Make Request

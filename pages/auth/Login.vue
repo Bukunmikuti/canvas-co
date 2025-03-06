@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { getAuth, createUserWithEmailAndPassword, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 const errorMessage = ref(false);
 definePageMeta({
   layout: "auth",
@@ -58,7 +58,7 @@ definePageMeta({
         return navigateTo("/dashboard");
       }
     },
-  ]
+  ],
 });
 
 const useGoogle = async () => {
@@ -67,14 +67,14 @@ const useGoogle = async () => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     const user = result.user;
-    console.log(user)
+    console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
     console.log(error);
     errorMessage.value = "An error occurred. Please try again.";
   }
   // Implement Google Sign Up
-}
+};
 </script>
 
 <style scoped lang="less">

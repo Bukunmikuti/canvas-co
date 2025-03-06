@@ -7,10 +7,20 @@ import {
   Banknote,
 } from "lucide-vue-next";
 import { ref } from "vue";
+import { getAuth, signOut } from "firebase/auth";
 import { useRoute } from "vue-router";
 
 const router = useRoute();
 const pathname = router.path;
+const activeLink = ref<string>("");
+
+const setActiveLink = (path: string) => {
+  activeLink.value = path;
+};
+
+onMounted(() => {
+  activeLink.value = pathname;
+});
 
 const menuList = ref([
   { name: "Dashboard", icon: House, path: "/dashboard" },
@@ -19,6 +29,18 @@ const menuList = ref([
   { name: "Brand Asset", icon: Banknote, path: "/brand-asset" },
   { name: "Settings", icon: Settings, path: "/settings" },
 ]);
+
+const logout = async () => {
+  const auth = getAuth();
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully");
+    // Redirect to login page
+    navigateTo("/auth/login");
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
+};
 </script>
 
 <template>
@@ -27,7 +49,7 @@ const menuList = ref([
   >
     <div>
       <div
-        class="flex flex-wrap justify-center items-center gap-2 py-[2rem] border-b max-h-[12vh]"
+        class="flex flex-wrap justify-center items-center gap-2 py-[2rem] border-b h-[12vh]"
       >
         <NuxtImg
           src="/canvasLogo.svg"
@@ -36,48 +58,49 @@ const menuList = ref([
           height="30"
           class="w-[25px] h-[25px]"
         />
-        <p class="text-purple-900 text-2xl font-[500]">Canvas&Co</p>
+        <p class="text-purple-900 text-[20px] font-[500]">Canvas&Co</p>
       </div>
-      <ul class="my-10 space-y-5 text-[#42526D]">
+      <ul class="my-10 space-y-10 text-[#42526D]">
         <li
           v-for="(item, index) in menuList"
           :key="index"
           :style="
-            pathname.startsWith(item.path)
+            activeLink.includes(item.path)
               ? 'background: linear-gradient(180deg, #F5D2FF 100%, #380055 0%)'
               : ''
           "
           :class="`py-5 pl-10`"
+          @click="() => setActiveLink(item.path)"
         >
           <div class="border-l-[4px] border-red-500 z-10" />
-          <a
-            :href="`${item.path}`"
+          <NuxtLink
+            :to="`${item.path}`"
             class="flex items-center gap-2 no-underline"
           >
             <component
               :is="item.icon"
               :class="`w-8 h-8  ${
-                pathname.includes(item.path) ? 'text-white' : 'text-[#42526D]'
+                activeLink.includes(item.path) ? 'text-white' : 'text-[#42526D]'
               }`"
             />
             <p
               :class="`${
-                pathname.includes(item.path)
-                  ? 'text-[#091E42] font-[700]'
+                activeLink.includes(item.path)
+                  ? 'text-[#091E42] font-[600]'
                   : 'text-[#42526D]'
               } h-full`"
             >
               {{ item.name }}
             </p>
-          </a>
+          </NuxtLink>
         </li>
       </ul>
     </div>
-    <div class="flex ml-10 mb-[4rem]">
-      <h1 to="/" class="text-red-500 text-base flex gap-2 items-center">
+    <button class="flex ml-10 mb-[4rem]" @click="logout">
+      <h1 to="/" class="text-red-500 text-[15px] flex gap-2 items-center">
         <LogOut icon="material-symbols-light:logout" width="24" height="24" />
         Log Out
       </h1>
-    </div>
+    </button>
   </div>
 </template>

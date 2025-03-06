@@ -13,6 +13,7 @@ const closeModal = () => {
 </script>
 <template>
   <div>
+    <TemplatePreview v-model:open="isModalOpen" @confrim="closeModal" />
     <div
       class="bg-[#D9D9D9] p-10 py-4 flex justify-center items-center h-[200px] w-full rounded-[8px]"
       @click="openModal"
@@ -24,5 +25,4 @@ const closeModal = () => {
     </p>
     <p class="text-[#A6AEBB] text-[12px]">Instagram 1080 x 1350</p>
   </div>
-  <TemplatePreview v-model:open="isModalOpen" @confrim="closeModal" />
 </template>

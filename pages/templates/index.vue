@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ChevronRight, SearchIcon } from "lucide-vue-next";
-import Designtemplate from "~/components/template/DesignTemplate.vue";
+import { Label } from "~/components/ui/label";
+import DesignTemplate from "~/components/template/DesignTemplate.vue";
 </script>
 
 <template>
-  <div>
+  <div class="md:w-[80vw]">
     <div class="flex justify-center items-center mb-5">
       <div
         style="background: radial-gradient(circle, #d480ff, #eeccff)"
@@ -28,35 +29,41 @@ import Designtemplate from "~/components/template/DesignTemplate.vue";
       </div>
     </div>
     <div class="my-5 space-y-3">
-      <h1 class="font-semibold text-lg">Most Design Trends</h1>
+      <!-- <NuxtLink to="/templates/instagramDesign">
+      <La class="font-semibold">
+          <p>Instagram Design</p>
+          <ChevronRight />
+        </La>
+      </NuxtLink> -->
+      <Label>Most Design Trends</Label>
+
       <div class="grid grid-cols-4 gap-5">
-        <Designtemplate />
-        <Designtemplate />
-        <Designtemplate />
-        <Designtemplate />
+        <DesignTemplate />
+        <DesignTemplate />
+        <DesignTemplate />
       </div>
     </div>
     <div class="my-5 space-y-3">
       <NuxtLink to="/templates/instagramDesign">
-        <div class="font-semibold text-lg flex justify-between">
+        <Label class="font-semibold text-black flex justify-between">
           <p>Instagram Design</p>
           <ChevronRight />
-        </div>
+        </Label>
       </NuxtLink>
       <div class="grid grid-cols-4 gap-5">
-        <Designtemplate />
-        <Designtemplate />
-        <Designtemplate />
-        <Designtemplate />
+        <DesignTemplate />
+        <DesignTemplate />
+        <DesignTemplate />
+        <DesignTemplate />
       </div>
     </div>
     <div class="my-5 space-y-3">
-      <h1 class="font-semibold text-lg">Presentation Slides Design</h1>
+      <Label class="font-semibold">Presentation Slides Design</Label>
       <div class="grid grid-cols-4 gap-5">
-        <Designtemplate />
-        <Designtemplate />
-        <Designtemplate />
-        <Designtemplate />
+        <DesignTemplate />
+        <DesignTemplate />
+        <DesignTemplate />
+        <DesignTemplate />
       </div>
     </div>
   </div>
