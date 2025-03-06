@@ -41,8 +41,7 @@ const reset = async () => {
       },
     });
   } catch (error) {
-    console.log(error);
-    errorMessage.value = error.message;
+    errorMessage.value = firebaseErrorMap(error.code);
   }
 };
 </script>

@@ -25,7 +25,7 @@ const title = computed(() => {
 
 const instruction = computed(() => {
   if (query.page === "reset") {
-    return "Click on the link we sent to your email to reset your password and finsh the account setup.";
+    return "Click on the link we sent to your email to reset your password if the account exists.";
   } else {
     return "Click on the link we sent to your email to verify your email address and finsh the account setup.";
   }

@@ -35,8 +35,8 @@
             placeholder="Input password"
           />
         </div>
-        <button id="submit" type="submit" @click.prevent="signup">
-          <Icon v-if="isLoading" name="line-md:loading-loop"></Icon>
+        <button id="submit" @click.prevent="signup">
+          <Icon v-if="isLoading" name="codex:loader" size="40px"></Icon>
           <span v-else>Sign Up</span>
         </button>
 
@@ -61,6 +61,11 @@ const isLoading = ref(false);
 const auth = useFirebaseAuth();
 
 const signup = async () => {
+  if (!email.value || !password.value) {
+    errorMessage.value = "Please enter a valid email and password";
+    return;
+  }
+
   try {
     isLoading.value = true;
     const user = await signup_email(auth, email.value, password.value);
@@ -68,7 +73,7 @@ const signup = async () => {
     return navigateTo("/auth/verify");
   } catch (error) {
     isLoading.value = false;
-    errorMessage.value = error;
+    errorMessage.value = firebaseErrorMap(error.code);
   }
 };
 
@@ -78,8 +83,7 @@ const useGoogle = async () => {
     console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
-    console.log(error);
-    errorMessage.value = error;
+    errorMessage.value = firebaseErrorMap(error.code);
   }
 };
 </script>
@@ -182,6 +186,10 @@ h1 {
 
   #submit {
     width: 100%;
+    height: 51px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 12px;
     font-size: 1.7rem;
     border: none;

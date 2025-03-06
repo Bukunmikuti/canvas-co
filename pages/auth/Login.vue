@@ -30,10 +30,17 @@
             id="password"
             v-model="password"
           />
-          <p id="forget-pwd"><NuxtLink to="reset">Forgot password?</NuxtLink></p>
+          <p id="forget-pwd">
+            <NuxtLink to="reset">Forgot password?</NuxtLink>
+          </p>
         </div>
-        <button id="submit" @click.prevent="login">Login</button>
-        <NuxtLink to="/auth/signup" id="signup-link">Don't have an account? Sign up</NuxtLink>
+        <button id="submit" @click.prevent="login">
+          <Icon v-if="isLoading" name="codex:loader" size="40px"></Icon>
+          <span v-else>Login</span>
+        </button>
+        <NuxtLink to="/auth/signup" id="signup-link"
+          >Don't have an account? Sign up</NuxtLink
+        >
       </form>
     </div>
   </div>
@@ -42,16 +49,21 @@
 <script setup>
 definePageMeta({
   layout: "auth-layout",
-  middleware: ['login-guard'],
+  middleware: ["login-guard"],
 });
 
-const email = ref('')
-const password = ref('')
+const email = ref("");
+const password = ref("");
 const errorMessage = ref(false);
 const auth = useFirebaseAuth();
 const isLoading = ref(false);
 
 const login = async () => {
+  if (!email.value || !password.value) {
+    errorMessage.value = "Please enter a valid email and password";
+    return;
+  }
+
   try {
     isLoading.value = true;
     const user = await signin_email(auth, email.value, password.value);
@@ -59,7 +71,7 @@ const login = async () => {
     return navigateTo("/dashboard");
   } catch (error) {
     isLoading.value = false;
-    errorMessage.value = error;
+    errorMessage.value = firebaseErrorMap(error.code);
   }
 };
 
@@ -69,8 +81,7 @@ const useGoogle = async () => {
     console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
-    console.log(error);
-    errorMessage.value = error;
+    errorMessage.value = firebaseErrorMap(error.code);
   }
 };
 </script>
@@ -154,7 +165,7 @@ const useGoogle = async () => {
     input {
       width: 100%;
       padding: 15px 20px;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       background: #e5e5e5;
       color: inherit;
       border-radius: 30px;
@@ -197,6 +208,10 @@ const useGoogle = async () => {
 
   #submit {
     width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 12px;
     font-size: 1.7rem;
     border: none;
