@@ -1,12 +1,11 @@
 <template>
   <div id="verify">
     <img src="/img/mail.png" alt="logo" />
-    <h1>Email Verification</h1>
+    <h1>{{ title }}</h1>
     <p>
-      Click on the link we sent to your inbox to verify your email address and
-      finsh the account setup. <br /><br />
+      {{ instruction }} <br /><br />
       Wrong address? go back to
-      <NuxtLink to="/auth/signup">sign up</NuxtLink> and enter your email again.
+      <NuxtLink :to=link.url>{{ link.text }}</NuxtLink> and enter your email again.
     </p>
   </div>
 </template>
@@ -15,6 +14,29 @@
 definePageMeta({
   layout: "auth-layout",
   middleware: ["verify-guard"],
+});
+
+const { query } = useRoute();
+console.log(query.page);
+
+const title = computed(() => {
+  return query.page === "reset" ? "Reset Password" : "Email Verification";
+});
+
+const instruction = computed(() => {
+  if (query.page === "reset") {
+    return "Click on the link we sent to your email to reset your password and finsh the account setup.";
+  } else {
+    return "Click on the link we sent to your email to verify your email address and finsh the account setup.";
+  }
+});
+
+const link = computed(() => {
+  if (query.page === "reset") {
+    return { url: "/auth/reset", text: "Reset Password" };
+  } else {
+    return { url: "/auth/signup", text: "Sign up" };
+  }
 });
 </script>
 
@@ -40,7 +62,7 @@ definePageMeta({
     text-align: center;
     margin-top: 0;
     color: #b3b9c4;
-    max-width: 500px;
+    max-width: 450px;
   }
 
   a {

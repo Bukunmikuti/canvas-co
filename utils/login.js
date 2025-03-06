@@ -64,14 +64,17 @@ export const emailVerification = async (auth, user) => {
     window.localStorage.setItem("emailForSignIn", user.email);
   } catch (error) {
     console.log(error);
+    throw new Error(error.message);
   }
 };
 
-const resetPassword = async (email) => {
+export const resetPassword = async (auth, email) => {
   try {
     await sendPasswordResetEmail(auth, email);
+    // password reset email sent!
   } catch (error) {
     console.log(error);
+    throw new Error(error);
   }
 }
 

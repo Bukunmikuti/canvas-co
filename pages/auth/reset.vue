@@ -13,7 +13,7 @@
             v-model="email"
           />
         </div>
-        <button id="submit" @click="reset">Continue</button>
+        <button id="submit" @click.prevent="reset">Continue</button>
         <NuxtLink to="/auth/signup" id="signup-link"
           >Don't have an account? Sign up</NuxtLink
         >
@@ -23,25 +23,26 @@
 </template>
 
 <script setup>
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-const errorMessage = ref(false);
 definePageMeta({
   layout: "auth-layout",
-  middleware: [
-    async () => {
-      const user = await getCurrentUser();
-      if (user) {
-        return navigateTo("/dashboard");
-      }
-    },
-  ],
 });
+
+const errorMessage = ref(false);
+const email = ref("");
+const auth = useFirebaseAuth();
 
 const reset = async () => {
   try {
-    await sendPasswordResetEmail(auth.currentUser);
+    await resetPassword(auth, email.value);
+    return navigateTo({
+      path: "/auth/verify",
+      query: {
+        page: 'reset',
+      },
+    });
   } catch (error) {
     console.log(error);
+    errorMessage.value = error.message;
   }
 };
 </script>
