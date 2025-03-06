@@ -8,12 +8,30 @@ import {
   signOut
 } from "firebase/auth";
 
-const actionCodeSettings = {
-  // URL you want to redirect back to. The domain (www.example.com) for this
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: "http://localhost:3000/auth/verify",
-  handleCodeInApp: true,
-};
+const firebaseErrorMap = (error) => {
+  const errorCode = error.code;
+  console.log(errorCode);
+  switch (errorCode) {
+    case "auth/email-already-in-use":
+      return "Email already exists. Please sign in.";
+    case "auth/invalid-email":
+      return "Invalid email. Please try again.";
+    case "auth/weak-password":
+      return "Weak password. Please try again.";
+    case "auth/user-not-found":
+      return "User not found. Please sign up.";
+    case "auth/wrong-password":
+      return "Wrong password. Please try again.";
+    case "auth/invalid-credential":
+      return "  This user does not exist. Please sign up.";
+    case "auth/too-many-requests":
+      return "Too many requests. Try again later.";
+    default:
+      return "An error occurred. Please try again.";
+  }
+
+}
+
 const provider = new GoogleAuthProvider();
 
 export const signup_email = async (auth, email, password) => {
@@ -42,7 +60,8 @@ export const signin_email = async (auth, email, password) => {
     const user = userCredential.user;
     return user;
   } catch (error) {
-    throw new Error("An error occurred. Please try again.");
+    console.log(error.code);
+    throw new Error(firebaseErrorMap(error));
   }
 };
 
