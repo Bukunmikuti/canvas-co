@@ -32,7 +32,7 @@
           />
           <p id="forget-pwd"><NuxtLink to="reset">Forgot password?</NuxtLink></p>
         </div>
-        <button id="submit" @click="login">Login</button>
+        <button id="submit" @click.prevent="login">Login</button>
         <NuxtLink to="/auth/signup" id="signup-link">Don't have an account? Sign up</NuxtLink>
       </form>
     </div>
@@ -40,7 +40,6 @@
 </template>
 
 <script setup>
-const errorMessage = ref(false);
 definePageMeta({
   layout: "auth-layout",
   middleware: ['login-guard'],
@@ -48,13 +47,16 @@ definePageMeta({
 
 const email = ref('')
 const password = ref('')
+const errorMessage = ref(false);
+const auth = useFirebaseAuth();
+const isLoading = ref(false);
 
 const login = async () => {
   try {
     isLoading.value = true;
-    const user = await signin_email(email.value, password.value);
+    const user = await signin_email(auth, email.value, password.value);
     isLoading.value = false;
-    return navigateTo("dashboard");
+    return navigateTo("/dashboard");
   } catch (error) {
     isLoading.value = false;
     errorMessage.value = error;
@@ -63,7 +65,7 @@ const login = async () => {
 
 const useGoogle = async () => {
   try {
-    const user = await signin_with_google();
+    const user = await signin_with_google(auth);
     console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {

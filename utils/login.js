@@ -1,10 +1,11 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut
 } from "firebase/auth";
 
 const actionCodeSettings = {
@@ -13,25 +14,25 @@ const actionCodeSettings = {
   url: "http://localhost:3000/auth/verify",
   handleCodeInApp: true,
 };
-const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-export const signup_email = async () => {
+export const signup_email = async (auth, email, password) => {
   try {
+    console.log(auth);
     const userCredential = await createUserWithEmailAndPassword(
       auth,
-      email.value,
-      password.value
+      email,
+      password
     );
     const user = userCredential.user;
-    await emailVerification(user);
+    await emailVerification(auth, user);
     return user;
   } catch (error) {
     throw new Error("An error occurred. Please try again.");
   }
 };
 
-export const signin_email = async (email, password) => {
+export const signin_email = async (auth, email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -45,7 +46,7 @@ export const signin_email = async (email, password) => {
   }
 };
 
-export const signin_with_google = async () => {
+export const signin_with_google = async (auth) => {
   try {
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -57,7 +58,7 @@ export const signin_with_google = async () => {
   }
 };
 
-export const emailVerification = async (user) => {
+export const emailVerification = async (auth, user) => {
   try {
     await sendEmailVerification(auth.currentUser);
     window.localStorage.setItem("emailForSignIn", user.email);
@@ -65,3 +66,21 @@ export const emailVerification = async (user) => {
     console.log(error);
   }
 };
+
+const resetPassword = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const signout_user = async (auth) => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.log(error);
+    throw new Error("An error occurred. Please try again.");
+  }
+}
+

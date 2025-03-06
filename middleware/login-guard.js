@@ -2,7 +2,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const user = await getCurrentUser();
   // If the user is signed in and their email is verified, redirect to the dashboard
   if (user && user.emailVerified) {
-    console.log("email verified");
     return navigateTo({ path: "/dashboard" });
   }
 

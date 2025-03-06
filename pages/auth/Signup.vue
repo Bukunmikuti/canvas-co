@@ -49,20 +49,21 @@
 </template>
 
 <script setup>
-import { signin_with_google, signup_email } from "#imports";
 definePageMeta({
   layout: "auth-layout",
   middleware: ["login-guard"],
 });
+
 const email = ref("");
 const password = ref("");
 const errorMessage = ref(false);
 const isLoading = ref(false);
+const auth = useFirebaseAuth();
 
 const signup = async () => {
   try {
     isLoading.value = true;
-    const user = await signup_email();
+    const user = await signup_email(auth, email.value, password.value);
     isLoading.value = false;
     return navigateTo("/auth/verify");
   } catch (error) {
@@ -73,7 +74,7 @@ const signup = async () => {
 
 const useGoogle = async () => {
   try {
-    const user = await signin_with_google();
+    const user = await signin_with_google(auth);
     console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
