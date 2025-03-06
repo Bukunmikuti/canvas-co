@@ -1,67 +1,43 @@
 <template>
   <div id="verify">
     <img src="/img/mail.png" alt="logo" />
-    <h1>Email Verification</h1>
+    <h1>{{ title }}</h1>
     <p>
-      Click on the link we sent to your inbox to verify your email address and
-      finsh the account setup. <br /><br />
+      {{ instruction }} <br /><br />
       Wrong address? go back to
-      <NuxtLink to="/auth/signup">sign up</NuxtLink> and enter your email again.
+      <NuxtLink :to=link.url>{{ link.text }}</NuxtLink> and enter your email again.
     </p>
   </div>
 </template>
 
 <script setup>
-import {
-  getAuth,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-} from "firebase/auth";
 definePageMeta({
-  layout: "auth",
-  middleware: [
-    "auth",
-    async () => {
-      const user = await getCurrentUser();
-      if (user.emailVerified) {
-        /* Take user to dashboard */
-        //return redirect('/dashboard');
-      }
-    },
-  ],
+  layout: "auth-layout",
+  middleware: ["verify-guard"],
 });
 
-const completeVerification = async () => {
-  const user = getCurrentUser()
-  console.log(user, user.emailVerified)
-  const auth = getAuth();
-  if (isSignInWithEmailLink(auth, window.location.href)) {
-    let email = window.localStorage.getItem("emailForSignIn");
-    if (!email) {
-      email = window.prompt("Please provide your email for confirmation");
-    }
-    try {
-      await signInWithEmailLink(auth, email, window.location.href);
-      window.localStorage.removeItem("emailForSignIn");
-      console.log(email)
-      // verification completed
-      //return redirect('/dashboard');
-    } catch (error) {
-      console.error(error);
-    }
+const { query } = useRoute();
+console.log(query.page);
+
+const title = computed(() => {
+  return query.page === "reset" ? "Reset Password" : "Email Verification";
+});
+
+const instruction = computed(() => {
+  if (query.page === "reset") {
+    return "Click on the link we sent to your email to reset your password if the account exists.";
+  } else {
+    return "Click on the link we sent to your email to verify your email address and finsh the account setup.";
   }
-};
-
-onMounted(() => {
-  completeVerification();
 });
 
-const actionCodeSettings = {
-  // URL you want to redirect back to. The domain (www.example.com) for this
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: "https://ezer.pages.dev/dashboard",
-  handleCodeInApp: true,
-};
+const link = computed(() => {
+  if (query.page === "reset") {
+    return { url: "/auth/reset", text: "Reset Password" };
+  } else {
+    return { url: "/auth/signup", text: "Sign up" };
+  }
+});
 </script>
 
 <style scoped lang="less">
@@ -86,7 +62,7 @@ const actionCodeSettings = {
     text-align: center;
     margin-top: 0;
     color: #b3b9c4;
-    max-width: 500px;
+    max-width: 450px;
   }
 
   a {

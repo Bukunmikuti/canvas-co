@@ -1,105 +1,91 @@
 <template>
   <div id="signup">
-    <div class="title">
-      <h2>Create an Account</h2>
-      <p>Already have an account? <NuxtLink to="login">Log in</NuxtLink></p>
+    <h1>Create an Account</h1>
+
+    <div class="wrapper">
+      <div id="providers">
+        <button id="google" @click="useGoogle">
+          <Icon name="flat-color-icons:google" size="27px"></Icon>
+          <span>Sign in with Google</span>
+        </button>
+      </div>
+      <div id="divider">
+        <span>or</span>
+      </div>
+      <!-- Form to collect user signup details -->
+      <form id="account-form">
+        <p id="error" v-show="errorMessage">
+          {{ errorMessage }}
+        </p>
+        <div>
+          <label for="email">Email?</label>
+          <input
+            v-model="email"
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+          />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input
+            v-model="password"
+            type="password"
+            id="password"
+            placeholder="Input password"
+          />
+        </div>
+        <button id="submit" @click.prevent="signup">
+          <Icon v-if="isLoading" name="codex:loader" size="40px"></Icon>
+          <span v-else>Sign Up</span>
+        </button>
+
+        <NuxtLink to="/auth/login" id="login-link"
+          >Already have an account? Log in</NuxtLink
+        >
+      </form>
     </div>
-
-    <!-- Form to collect user signup details -->
-    <form id="account-form">
-      <p id="error" v-show="errorMessage">
-        {{ errorMessage }}
-      </p>
-      <div>
-        <label for="email">What's your email?</label>
-        <input
-          v-model="email"
-          type="email"
-          id="email"
-          placeholder="you@example.com"
-        />
-      </div>
-      <div>
-        <label for="password">Create a Password</label>
-        <input
-          v-model="password"
-          type="password"
-          id="password"
-          placeholder="Input password"
-        />
-      </div>
-      <button id="submit" type="submit" @click.prevent="signUp">Sign Up</button>
-      <div id="divider"><span>OR</span></div>
-
-      <!-- Sign up with Google Button -->
-      <button id="google" @click.prevent="useGoogle">
-        <Icon name="flat-color-icons:google" size="25"></Icon>
-        Continue with Google
-      </button>
-    </form>
   </div>
 </template>
 
 <script setup>
-import { getAuth, createUserWithEmailAndPassword, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-const provider = new GoogleAuthProvider();
 definePageMeta({
-  layout: "auth",
-  middleware: [
-    async () => {
-      const user = await getCurrentUser();
-      if (user) {
-        return navigateTo("/dashboard");
-      }
-    },
-  ]
+  layout: "auth-layout",
+  middleware: ["login-guard"],
 });
+
 const email = ref("");
 const password = ref("");
 const errorMessage = ref(false);
-const actionCodeSettings = {
-  // URL you want to redirect back to. The domain (www.example.com) for this
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: 'http://localhost:3000/auth/verify',
-  handleCodeInApp: true,
-};
-const auth = getAuth();
+const isLoading = ref(false);
+const auth = useFirebaseAuth();
 
-const signUp = async () => {
+const signup = async () => {
+  if (!email.value || !password.value) {
+    errorMessage.value = "Please enter a valid email and password";
+    return;
+  }
+
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-    const user = userCredential.user;
-    await sendEmailVerification(user);
+    isLoading.value = true;
+    const user = await signup_email(auth, email.value, password.value);
+    isLoading.value = false;
     return navigateTo("/auth/verify");
   } catch (error) {
-    errorMessage.value = "An error occurred. Please try again.";
-    console.log(error)
+    isLoading.value = false;
+    errorMessage.value = firebaseErrorMap(error.code);
   }
-}
-
-const sendEmailVerification = async (user) => {
-  try {
-    await sendSignInLinkToEmail(auth, user.email, actionCodeSettings);
-    window.localStorage.setItem('emailForSignIn', user.email);
-  } catch (error) {
-    console.log(error);
-  }
-}
+};
 
 const useGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
-    console.log(user)
+    const user = await signin_with_google(auth);
+    console.log(user);
     return navigateTo("/dashboard");
   } catch (error) {
-    console.log(error);
-    errorMessage.value = "An error occurred. Please try again.";
+    errorMessage.value = firebaseErrorMap(error.code);
   }
-  // Implement Google Sign Up
-}
+};
 </script>
 
 <style scoped lang="less">
@@ -107,32 +93,29 @@ const useGoogle = async () => {
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  max-width: 400px;
 }
-.title {
-  text-align: center;
-  h2 {
-    font-size: 2.2rem;
-    margin-bottom: 0;
-  }
-  p {
-    font-size: 1.5rem;
-    color: #b3b9c4;
-    margin-top: 0px;
-    a {
-      color: #753c90;
-      font-weight: bold;
-    }
-  }
+
+h1 {
+  font-weight: 500;
+  letter-spacing: -2px;
+  font-size: 3.7rem;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 20px;
 }
 
 #account-form {
   width: 100%;
   max-width: 600px;
-  margin: 15px auto;
-  padding: 20px;
+  margin: 15px 0;
+  //padding: 20px;
   display: flex;
   flex-direction: column;
 
@@ -147,88 +130,123 @@ const useGoogle = async () => {
   }
 
   div {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     label {
       font-size: 1.6rem;
-      color: #b3b9c4;
+      color: #383838;
+      font-weight: 500;
       display: block;
       margin-bottom: 5px;
     }
 
     input {
       width: 100%;
-      padding: 10px;
-      font-size: 1.4rem;
-      border: 3px solid #d7d7d7;
+      padding: 15px 20px;
+      font-size: 1.6rem;
+      background: #e5e5e5;
       color: inherit;
-      border-radius: 5px;
+      border-radius: 30px;
+      border: none;
       outline: none;
 
       &:focus {
         border-color: #8a8a8a;
       }
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s;
+        color: white !important;
+      }
     }
+  }
+
+  #forget-pwd {
+    margin-top: 10px;
+    color: #a63bbe;
+    font-weight: 500;
+    text-align: right;
+    padding: 0 10px;
+
+    a {
+      color: inherit;
+      font-weight: 500;
+    }
+  }
+
+  #signup-link {
+    font-weight: 500;
+    text-align: center;
+    margin-top: 10px;
+    color: inherit;
   }
 
   #submit {
     width: 100%;
-    padding: 10px;
-    font-size: 1.6rem;
+    height: 51px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    font-size: 1.7rem;
     border: none;
-    border-radius: 5px;
-    background-color: #a900ff;
+    border-radius: 30px;
+    background-color: #b300df;
     color: #fff;
     cursor: pointer;
     margin-top: 5px;
 
     &:hover {
-      background: #8a00cc;
+      background: #9501b9;
     }
   }
+}
+
+#login-link {
+  font-weight: 500;
+  text-align: center;
+  margin-top: 10px;
+  color: inherit;
 }
 
 #divider {
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   text-align: center;
   font-size: 1.6rem;
-  color: #b3b9c4;
-  margin: 25px 0;
-
-  span {
-    padding: 0 10px;
-    font-weight: bold;
-  }
-
-  &:before,
-  &:after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid #dbdbdb;
-  }
+  color: #212225;
+  font-weight: 500;
+  margin: 15px 0;
 }
 
-#google {
-  padding: 10px 15px;
-  font-size: 1.6rem;
-  border: 3px solid #d1d1d1;
-  border-radius: 7px;
-  background-color: #fff;
-  color: #220033;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#providers {
+  margin-top: 30px;
+  #google {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1.6rem;
+    border-radius: 30px;
+    background-color: #e5e5e5;
+    color: rgb(36, 21, 43);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  span {
-    margin-right: 10px;
-  }
+    span {
+      margin-right: 10px;
+      font-weight: 500;
+    }
 
-  &:hover {
-    background: #f5f5f5;
+    &:hover {
+      background: darken(#e5e5e5, 10%);
+    }
   }
 }
 </style>

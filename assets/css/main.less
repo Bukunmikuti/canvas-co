@@ -1,9 +1,18 @@
-@import './reboot.css';
-@import './theme.less';
+@import "./reboot.css";
+@import "./theme.less";
 
 :root {
   --animate-duration: 0.6s !important;
   --animate-delay: 0s !important;
+  @font-face {
+    font-family: "Okine Sans";
+    src: url("../font/okinesans-regular.otf") format("opentype"),
+      url("../font/okinesans-medium.otf") format("opentype"),
+      url("../font/okinesans-bold.otf") format("opentype"),
+      url("../font/okinesans-black.otf") format("opentype"),
+      url("../font/okinesans-light.otf") format("opentype"),
+      url("../font/okinesans-thin.otf") format("opentype");
+  }
 }
 
 html {
@@ -17,7 +26,8 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  font-family: "Okine Sans", sans-serif, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif;
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 1.5;

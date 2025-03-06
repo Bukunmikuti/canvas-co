@@ -2,28 +2,17 @@
   <div>
     <h1>Dashboard</h1>
     <p>{{ welcome() }}</p>
+    <button @click="logout">Logout</button>
   </div>
 </template>
 
 <script setup>
-import { getCurrentUser } from "vuefire";
-const dem = ref({
-  user: {
-    displayName: "John Doe",
-    email: "",
-  },
-});
 
 definePageMeta({
-  middleware: [
-    async () => {
-      const user = await getCurrentUser();
-      if (!user) {
-        return navigateTo("/auth/login");
-      }
-    },
-  ],
+  middleware: ['dashboard-guard'],
 });
+
+const auth = useFirebaseAuth();
 
 const welcome = () => {
   const user = useCurrentUser();
@@ -32,6 +21,11 @@ const welcome = () => {
   } else {
     return `Welcome, your email is ${user.value.email}`;
   }
+};
+
+const logout = async () => {
+  await signout_user(auth);
+  navigateTo("/auth/login");
 };
 </script>
 
@@ -42,5 +36,11 @@ div {
 h1 {
   font-size: 3rem;
   color: #313131;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #753c90;
+  color: white;
 }
 </style>
