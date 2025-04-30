@@ -1,29 +1,45 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@firebase/app-types": "^0.9.3",
-    "@nuxt/icon": "1.10.3",
-    "firebase": "^11.2.0",
-    "firebase-admin": "^13.0.2",
-    "firebase-functions": "^6.3.0",
-    "less": "^4.2.1",
-    "nuxt": "^3.15.1",
-    "nuxt-vuefire": "1.0.5",
-    "vue": "latest",
-    "vue-router": "latest",
-    "vuefire": "^3.2.1"
-  },
-  "devDependencies": {
-    "@vueuse/core": "^12.4.0",
-    "@vueuse/nuxt": "^12.4.0"
-  }
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "@mcistudio/vue-colorpicker": "^2.3.2",
+        "@nuxt/icon": "^1.10.3",
+        "@nuxt/image": "^1.9.0",
+        "@nuxtjs/color-mode": "^3.5.2",
+        "@vueuse/core": "^12.4.0",
+        "@vueuse/nuxt": "^12.8.2",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "fabric": "^6.6.1",
+        "ipx": "^3.0.1",
+        "konva": "^9.3.20",
+        "lucide-vue-next": "^0.471.0",
+        "nuxt": "^3.15.1",
+        "nuxt-vuefire": "^1.0.5",
+        "radix-vue": "^1.9.12",
+        "reka-ui": "^2.2.0",
+        "tailwind-merge": "^2.6.0",
+        "vue": "latest",
+        "vue-konva": "^3.2.0",
+        "vue-router": "latest",
+        "vue3-colorpicker": "^2.3.0"
+    },
+    "devDependencies": {
+        "@nuxtjs/tailwindcss": "^6.13.1",
+        "autoprefixer": "^10.4.20",
+        "less": "^4.2.2",
+        "postcss": "^8.5.1",
+        "prettier": "3.5.3",
+        "shadcn-nuxt": "^0.11.3",
+        "tailwindcss": "^3.4.17",
+        "tailwindcss-animate": "^1.0.7"
+    }
 }

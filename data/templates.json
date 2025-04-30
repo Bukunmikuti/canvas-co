@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Modern Business Flyer",
+        "representativeImage": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&auto=format",
+        "data": {
+            "backgroundImage": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb",
+            "elements": [
+                {
+                    "type": "text",
+                    "content": "Summer Sale",
+                    "color": "#FFFFFF",
+                    "position": { "x": 200, "y": 200 }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Travel Promotion",
+        "representativeImage": "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg?auto=compress&cs=tinysrgb&w=500",
+        "data": {
+            "backgroundImage": "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg",
+            "elements": [
+                {
+                    "type": "text",
+                    "content": "Explore the World",
+                    "color": "#000000",
+                    "position": { "x": 300, "y": 300 }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Food Menu",
+        "representativeImage": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format",
+        "data": {
+            "backgroundImage": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+            "elements": [
+                {
+                    "type": "text",
+                    "content": "Today's Specials",
+                    "color": "#FFFFFF",
+                    "position": { "x": 100, "y": 150 },
+                    "fontSize": "32px",
+                    "fontWeight": "bold",
+                    "textShadow": "2px 2px 4px rgba(0,0,0,0.5)"
+                }
+            ]
+        }
+    }
+]

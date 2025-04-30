@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url('~/assets/font/HelveticaNeue-LightExt.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}

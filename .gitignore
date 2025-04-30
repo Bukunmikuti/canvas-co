@@ -23,3 +23,8 @@ logs
 .env.*
 !.env.example
 service-account.json
+
+.prettierignore
+.prettierrc.json
+
+.idea
