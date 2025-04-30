@@ -22,7 +22,7 @@ const closeSuccessModal = ()=>{
 
 
 <template>
-  <div class="flex justify-between px-10 py-8 mb-5 border-b">
+  <div class="flex justify-between px-10 py-8 border-b">
     <div class="flex items-center justify-center gap-1">
       <NuxtImg src="/canvasLogo.svg" alt="Ezer" class="w-[35px]" />
       <p class="text-xl font-medium font-helvetica text-primaryColor">Ezer</p>
